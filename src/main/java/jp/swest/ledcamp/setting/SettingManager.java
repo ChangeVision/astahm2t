@@ -9,16 +9,16 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import javax.xml.bind.JAXB;
-import javax.xml.bind.annotation.XmlTransient;
-import jp.swest.ledcamp.setting.GenerateSetting;
-import jp.swest.ledcamp.setting.TemplateEngine;
-import jp.swest.ledcamp.setting.TemplateMap;
+
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
+
+import jakarta.xml.bind.JAXB;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 @SuppressWarnings("all")
 public class SettingManager extends HashMap<String, GenerateSetting> {
@@ -61,7 +61,16 @@ public class SettingManager extends HashMap<String, GenerateSetting> {
   
   public void save() {
     File _file = new File(this.settingFilePath);
-    JAXB.marshal(SettingManager.instance, _file);
+    Thread currentThread = Thread.currentThread();
+    ClassLoader originalClassLoader = currentThread.getContextClassLoader();
+    ClassLoader pluginClassLoader = this.getClass().getClassLoader();
+    try {
+        currentThread.setContextClassLoader(pluginClassLoader);
+
+        JAXB.marshal(SettingManager.instance, _file);
+    } finally {
+        currentThread.setContextClassLoader(originalClassLoader);
+    }
   }
   
   public GenerateSetting load() {
@@ -113,10 +122,19 @@ public class SettingManager extends HashMap<String, GenerateSetting> {
             GenerateSetting _xblockexpression_2 = null;
             {
               File _file = new File(this.settingFilePath);
-              final SettingManager settings = JAXB.<SettingManager>unmarshal(_file, SettingManager.class);
               SettingManager.instance.clear();
-              SettingManager.instance.putAll(settings);
-              _xblockexpression_2 = SettingManager.instance.currentSetting = settings.currentSetting;
+              Thread currentThread = Thread.currentThread();
+              ClassLoader originalClassLoader = currentThread.getContextClassLoader();
+              ClassLoader pluginClassLoader = this.getClass().getClassLoader();
+              try {
+                  currentThread.setContextClassLoader(pluginClassLoader);
+                  final SettingManager settings = JAXB.<SettingManager> unmarshal(_file,
+                          SettingManager.class);
+                  SettingManager.instance.putAll(settings);
+                  _xblockexpression_2 = SettingManager.instance.currentSetting = settings.currentSetting;
+              } finally {
+                  currentThread.setContextClassLoader(originalClassLoader);
+              }
             }
             _xifexpression = _xblockexpression_2;
           } else {

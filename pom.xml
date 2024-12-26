@@ -5,13 +5,13 @@
 		<bundle.symbolicName>jp.swest.ledcamp.astahm2t</bundle.symbolicName>
 		<bundle.namespace>jp.swest.ledcamp</bundle.namespace>
 		<plugin.install>true</plugin.install>
-		<astah.version>6.7</astah.version>
+        <astah.version>10.0</astah.version>
 		<astah.edition>all</astah.edition>
 	</properties>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.swest.ledcamp</groupId>
 	<artifactId>astahm2t</artifactId>
-	<packaging>jar</packaging>
+    <packaging>bundle</packaging>
 	<name>Astah　コード生成プラグイン</name>
 	<pluginRepositories>
 		<pluginRepository>
@@ -48,7 +48,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.1.2</version>
+                <version>3.5.0</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -65,7 +65,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.3</version>
+                <version>3.3.2</version>
 				<configuration>
 					<inputEncoding>UTF-8</inputEncoding>
 					<outputEncoding>UTF-8</outputEncoding>
@@ -75,7 +75,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.0</version>
+                <version>4.0.0-M13</version>
 				<configuration>
 					<locales>ja</locales>
 					<inputEncoding>UTF-8</inputEncoding>
@@ -86,7 +86,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.2</version>
+                <version>3.2.5</version>
 				<configuration>
 					<systemPropertyVariables>
 						<file.encoding>utf-8</file.encoding>
@@ -102,13 +102,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.4.2</version>
+                <version>3.2.5</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.8</version>
+                <version>3.3.1</version>
 				<configuration>
 					<source>1.8</source>
 					<encoding>UTF-8</encoding>
@@ -116,8 +116,8 @@
 					<charset>UTF-8</charset>
 					<show>protected</show>
 					<links>
-						<link>http://java.sun.com/javase/ja/6/docs/ja/api/</link>
-						<link>http://members.change-vision.com/javadoc/astah-api/6_2/api/ja/doc/javadoc/</link>
+                        <link>https://docs.oracle.com/javase/8/docs/api/</link>
+                        <link>https://members.change-vision.com/javadoc/astah-api/8_4_0/api/ja/doc/javadoc/</link>
 					</links>
 				</configuration>
 			</plugin>
@@ -133,15 +133,10 @@
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-		</testResources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.4</version>
+                <version>3.1.2</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -159,17 +154,17 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+                <version>3.8.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<source>1.8</source>
-					<target>1.8</target>
+                    <source>21</source>
+                    <target>21</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
+                <version>3.3.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
@@ -177,14 +172,14 @@
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
-				<version>2.8.0</version>
+                <version>2.36.0</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>compile</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>/src/main/java</outputDirectory>
+                            <outputDirectory>src/main/java</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -193,12 +188,12 @@
 			<plugin>
 				<groupId>com.change_vision.astah</groupId>
 				<artifactId>astah-maven-plugin</artifactId>
-				<version>1.0.0</version>
+                <version>1.1.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.5.0</version>
+                <version>5.1.9</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
@@ -271,26 +266,26 @@
 			<groupId>com.change_vision.astah</groupId>
 			<artifactId>astah-api</artifactId>
 			<version>${astah.version}</version>
-			<systemPath>${ASTAH_HOME}/astah-api.jar</systemPath>
+            <systemPath>${astahPath}/astah-api.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.change_vision.astah</groupId>
 			<artifactId>astah-pro</artifactId>
 			<version>${astah.version}</version>
-			<systemPath>${ASTAH_HOME}/astah-pro.jar</systemPath>
+            <systemPath>${astahPath}/astah-pro.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>4.2.0</version>
+            <artifactId>osgi.core</artifactId>
+            <version>8.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-			<version>4.2.0</version>
+            <artifactId>osgi.cmpn</artifactId>
+            <version>7.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -302,7 +297,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-templates</artifactId>
-			<version>2.4.4</version>
+            <version>3.0.22</version>
 		</dependency>
 		<dependency>
 			<groupId>jp.skypencil.java-diff-utils</groupId>
@@ -317,9 +312,19 @@
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>2.8.0</version>
+            <version>2.36.0</version>
 		</dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>4.0.5</version>
+        </dependency>
 	</dependencies>
-	<version>1.5.2</version>
+    <version>1.6.0</version>
 	<description>astah* コード生成プラグイン</description>
 </project>
